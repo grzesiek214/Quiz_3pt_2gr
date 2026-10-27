@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="150dp"
-            android:text="Nastepne" />
+            android:text="Dalej" />
     </LinearLayout>
 
 </LinearLayout>

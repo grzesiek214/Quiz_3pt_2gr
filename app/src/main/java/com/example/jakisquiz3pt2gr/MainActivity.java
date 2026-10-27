@@ -1,6 +1,9 @@
 package com.example.jakisquiz3pt2gr;
 
+import static android.view.View.INVISIBLE;
+
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonTak;
     private Button buttonNie;
     private Button buttonDalej;
+    private int aktualnePytanie = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,23 @@ public class MainActivity extends AppCompatActivity {
         buttonNie = findViewById(R.id.button6);
         buttonDalej = findViewById(R.id.button8);
         imageView = findViewById(R.id.imageView2);
-        wypiszPytanie(0);
+        wypiszPytanie(aktualnePytanie);
+
+        buttonDalej.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        aktualnePytanie++;
+                        if (aktualnePytanie == pytania.size()) {
+                            buttonDalej.setVisibility(INVISIBLE);
+                            // TODO: wypisywanie wynikow
+                            return;
+                        }
+
+                        wypiszPytanie(aktualnePytanie);
+                    }
+                }
+        );
     }
 
     private void wypiszPytanie(int ktore) {
@@ -53,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         pytania = new ArrayList<>();
         pytania.add(new Pytanie(R.drawable.krowa, "Czy krowa jest królem zwierząt?", true));
         pytania.add(new Pytanie(R.drawable.kot, "Czy kot jest odmianą szynszyla", false));
-        pytania.add(new Pytanie(R.drawable.slon, "Czy to słonie dżwigają ziemię na latającym zółwiu?", true));
+        pytania.add(new Pytanie(R.drawable.slon, "Czy to słonie dźwigają ziemię na latającym zółwiu?", true));
         pytania.add(new Pytanie(R.drawable.sledz, "Czy śledź to ssak", false));
     }
 }
