@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,12 +62,24 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
+        
+        buttonTak.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sprawdzOdpowiedz(true);
+                    }
+                }
+        );
 
-    private void wypiszPytanie(int ktore) {
-        Pytanie pytanie = pytania.get(ktore);
-        textView.setText(pytanie.getTrescPytania());
-        imageView.setImageResource((int)pytanie.getIdZdjecia());
+        buttonNie.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sprawdzOdpowiedz(false);
+                    }
+                }
+        );
     }
 
     private void dodajPytania() {
@@ -75,5 +88,21 @@ public class MainActivity extends AppCompatActivity {
         pytania.add(new Pytanie(R.drawable.kot, "Czy kot jest odmianą szynszyla", false));
         pytania.add(new Pytanie(R.drawable.slon, "Czy to słonie dźwigają ziemię na latającym zółwiu?", true));
         pytania.add(new Pytanie(R.drawable.sledz, "Czy śledź to ssak", false));
+    }
+
+    private void wypiszPytanie(int ktore) {
+        Pytanie pytanie = pytania.get(ktore);
+        textView.setText(pytanie.getTrescPytania());
+        imageView.setImageResource((int)pytanie.getIdZdjecia());
+    }
+    
+    private void sprawdzOdpowiedz(boolean odpowiedz) {
+        if (pytania.get(aktualnePytanie).isCzyPoprawnaOdpowiedz() == odpowiedz) {
+            pytania.get(aktualnePytanie).setCzyPoprawnie(true);
+            Toast.makeText(this, "Poprawna odpowiedz", Toast.LENGTH_SHORT).show();
+        } else {
+            pytania.get(aktualnePytanie).setCzyPoprawnie(false);
+            Toast.makeText(this, "Błedna odpowiedź", Toast.LENGTH_SHORT).show();
+        }
     }
 }
