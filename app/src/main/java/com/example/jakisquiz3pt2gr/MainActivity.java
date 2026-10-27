@@ -1,6 +1,9 @@
 package com.example.jakisquiz3pt2gr;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<Pytanie> pytania;
+    private TextView textView;
+    private ImageView imageView;
+    private Button buttonTak;
+    private Button buttonNie;
+    private Button buttonDalej;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +33,20 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        dodajPytania();
+        textView = findViewById(R.id.textViewPytanie);
+        buttonTak = findViewById(R.id.button5);
+        buttonNie = findViewById(R.id.button6);
+        buttonDalej = findViewById(R.id.button8);
+        imageView = findViewById(R.id.imageView2);
+        wypiszPytanie(0);
+    }
+
+    private void wypiszPytanie(int ktore) {
+        Pytanie pytanie = pytania.get(ktore);
+        textView.setText(pytanie.getTrescPytania());
+        imageView.setImageResource((int)pytanie.getIdZdjecia());
     }
 
     private void dodajPytania() {
