@@ -2,8 +2,10 @@ package com.example.jakisquiz3pt2gr;
 
 import static android.view.View.INVISIBLE;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,12 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Pytanie> pytania;
+    private static List<Pytanie> pytania;
     private TextView textView;
     private ImageView imageView;
     private Button buttonTak;
     private Button buttonNie;
     private Button buttonDalej;
+    private Button buttonPodpowiedz;
     private int aktualnePytanie = 0;
 
     @Override
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         buttonTak = findViewById(R.id.button5);
         buttonNie = findViewById(R.id.button6);
         buttonDalej = findViewById(R.id.button8);
+        buttonPodpowiedz = findViewById(R.id.button);
         imageView = findViewById(R.id.imageView2);
         wypiszPytanie(aktualnePytanie);
 
@@ -88,14 +92,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        buttonPodpowiedz.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // TODO: obsluzyc wyswietlenie kliknieciem -> intencja
+                        // intencja jawna
+                        Intent intent = new Intent(MainActivity.this, PodpowiedzActivity.class);
+                        intent.putExtra("NR", aktualnePytanie);
+                        startActivity(intent);
+                    }
+                }
+        );
     }
 
-    private void dodajPytania() {
+    protected static List<Pytanie> dodajPytania() {
         pytania = new ArrayList<>();
-        pytania.add(new Pytanie(R.drawable.krowa, "Czy krowa jest królem zwierząt?", true));
-        pytania.add(new Pytanie(R.drawable.kot, "Czy kot jest odmianą szynszyla", false));
+        pytania.add(new Pytanie(R.drawable.krowa, "Czy krowa jest królem zwierząt?", true, "Indie"));
+        pytania.add(new Pytanie(R.drawable.kot, "Czy kot jest odmianą szynszyla", false, "Czy kot smakuje jak szynszyl?"));
         pytania.add(new Pytanie(R.drawable.slon, "Czy to słonie dźwigają ziemię na latającym zółwiu?", true));
-        pytania.add(new Pytanie(R.drawable.sledz, "Czy śledź to ssak", false));
+        pytania.add(new Pytanie(R.drawable.sledz, "Czy śledź to ssak", false, "Zobacz ssak morski"));
+
+        return pytania;
     }
 
     private void wypiszPytanie(int ktore) {
